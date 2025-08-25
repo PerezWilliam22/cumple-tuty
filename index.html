@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>¡Feliz cumpleaños, TUTY! 🎉</title>
+  <meta name="description" content="Un mensajito animado para celebrar a TUTY este 25 de agosto." />
+  <meta name="theme-color" content="#ff4d6d" />
+  <meta property="og:title" content="🎉 ¡Feliz cumpleaños, TUTY!" />
+  <meta property="og:description" content="Un mensajito animado para alegrarte el 25 de agosto." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg1: #ffdee9; --bg2: #b5fffc; --accent: #ff4d6d; --text:#1a1a1a; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; color: var(--text);
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    .background { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+    .gradient {
+      position: absolute; inset: -20% -20%;
+      background:
+        radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.35), transparent),
+        conic-gradient(from 0deg, rgba(255,77,109,.08), rgba(181,255,252,.08), rgba(255,77,109,.08));
+      filter: blur(40px); opacity: .9; animation: swirl 24s linear infinite;
+    }
+    @keyframes swirl { to { transform: rotate(1turn); } }
+
+    .container { position: relative; min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 4rem 1rem; }
+    .card {
+      position: relative; text-align: center; width: 100%; max-width: 840px;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      background: rgba(255,255,255,.8); backdrop-filter: blur(8px);
+      border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    }
+    h1 { font-size: clamp(2.2rem, 6vw, 4rem); margin: 0 0 .25rem; line-height: 1.1; font-weight: 800; letter-spacing: .5px; }
+    h1 span.script { font-family: 'Great Vibes', cursive; font-weight: 400; font-size: 1.1em; color: var(--accent); display: block; }
+    .sub { font-weight: 600; opacity: .85; margin-bottom: 1rem; }
+    .message { font-size: clamp(1rem, 2.3vw, 1.2rem); line-height: 1.65; margin: auto; max-width: 58ch; }
+
+    .badge { display: inline-flex; gap: .5rem; align-items: center; padding: .35rem .75rem; border-radius: 999px; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.08); margin-bottom: .8rem; font-weight: 600; }
+    .badge .dot { width: .65rem; height: .65rem; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,77,109,.15); }
+
+    .cta { margin-top: 1.2rem; display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+    button.play, button.share { border: none; border-radius: 14px; padding: .7rem 1rem; font-weight: 700; box-shadow: 0 6px 18px rgba(0,0,0,.12); cursor: pointer; }
+    button.play { background: var(--accent); color: white; }
+    button.share { background: white; color: #333; }
+    .footer-note { font-size: .9rem; opacity: .7; margin-top: 1rem; }
+
+    .balloons { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .balloon { position: absolute; width: 28px; height: 36px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; opacity: .75; animation: float 12s linear infinite; }
+    .balloon:after { content: ''; position: absolute; bottom: -8px; left: 50%; width: 2px; height: 18px; background: #555; transform: translateX(-50%); }
+    @keyframes float { 0% { transform: translateY(110vh) translateX(0) rotate(0deg); } 100% { transform: translateY(-20vh) translateX(60px) rotate(10deg); } }
+
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+
+    .signature { margin-top: 1rem; font-weight: 600; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gradient, .balloon, .pulse { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"><div class="gradient"></div></div>
+  <div class="balloons" id="balloons"></div>
+
+  <main class="container">
+    <article class="card pulse" id="card">
+      <div class="badge"><span class="dot"></span> <span id="dateText">25 de agosto</span></div>
+      <h1>¡Feliz cumpleaños, <span class="script" id="name">TUTY</span>! 🎂🎉</h1>
+      <p class="sub">Hoy celebramos tu vida, tu alegría y lo especial que eres.</p>
+      <p class="message" id="message">
+        Que este 25 de agosto esté lleno de abrazos, risas y sorpresas bonitas.
+        Gracias por iluminar con tu sonrisa cada lugar al que llegas.
+        Te deseo salud, amor, y sueños cumplidos — ¡hoy y siempre!
+      </p>
+      <p class="signature" id="signature">Con mucho cariño, William 💖</p>
+      <div class="cta">
+        <button class="play" id="confettiBtn">¡Celebrar ahora!</button>
+        <button class="share" id="shareBtn">Compartir</button>
+      </div>
+      <div class="footer-note">Toca la tarjeta o presiona “¡Celebrar ahora!” para lanzar confetti 🎊</div>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+  <script>
+    const CONFIG = {
+      recipient: "TUTY",      // 👈 nombre que se muestra grande
+      dateText: "25 de agosto",
+      from: "William",        // 👈 tu firma ya fija
+      lines: [
+        "Que este 25 de agosto esté lleno de abrazos, risas y sorpresas bonitas.",
+        "Gracias por iluminar con tu sonrisa cada lugar al que llegas.",
+        "Te deseo salud, amor y sueños cumplidos — ¡hoy y siempre!"
+      ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('dateText').textContent = CONFIG.dateText;
+      document.getElementById('name').textContent = CONFIG.recipient;
+      document.getElementById('message').innerHTML = CONFIG.lines.join(' ');
+
+      // Globos animados
+      const balloons = document.getElementById('balloons');
+      const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#b983ff','#ffafcc'];
+      for (let i = 0; i < 26; i++) {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        const size = 24 + Math.random()*22;
+        b.style.width = size + 'px';
+        b.style.height = (size*1.3) + 'px';
+        b.style.left = (Math.random()*100) + 'vw';
+        b.style.animationDuration = (10 + Math.random()*14) + 's';
+        b.style.animationDelay = (-Math.random()*10) + 's';
+        b.style.background = colors[i % colors.length];
+        b.style.boxShadow = 'inset -6px -8px 20px rgba(0,0,0,.12)';
+        balloons.appendChild(b);
+      }
+
+      // Confetti
+      const launch = (burst=200) => {
+        const duration = 2 * 1000;
+        const end = Date.now() + duration;
+        const defaults = { startVelocity: 35, spread: 360, ticks: 200, zIndex: 1000 };
+        (function frame() {
+          confetti(Object.assign({ particleCount: 2, angle: 60, origin: { x: 0 } }, defaults));
+          confetti(Object.assign({ particleCount: 2, angle: 120, origin: { x: 1 } }, defaults));
+          if (Date.now() < end) requestAnimationFrame(frame);
+        })();
+        confetti({
+          particleCount: burst,
+          spread: 90,
+          origin: { y: 0.6 },
+          scalar: 1.1,
+          zIndex: 1000
+        });
+      };
+
+      const card = document.getElementById('card');
+      const btn = document.getElementById('confettiBtn');
+      card.addEventListener('pointerdown', () => launch(180));
+      btn.addEventListener('click', () => launch(220));
+      setTimeout(() => launch(260), 500);
+
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', async () => {
+          try {
+            await navigator.share({
+              title: '🎉 ¡Feliz cumpleaños, ' + CONFIG.recipient + '!',
+              text: 'Un mensajito especial para ti ✨',
+              url: location.href
+            });
+          } catch {}
+        });
+      } else {
+        shareBtn.textContent = 'Copiar enlace';
+        shareBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(location.href);
+            shareBtn.textContent = '¡Enlace copiado!';
+            setTimeout(()=> shareBtn.textContent='Copiar enlace', 1500);
+          } catch {}
+        });
+      }
+    });
+  </script>
+</body>
+</html>
